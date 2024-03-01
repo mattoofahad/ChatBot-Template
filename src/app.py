@@ -1,1 +1,3 @@
 import os
+
+os.getcwd()
