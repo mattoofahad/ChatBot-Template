@@ -6,27 +6,29 @@ from openai import OpenAI
 
 
 def reset_history():
+    """_summary_"""
     st.session_state.messages = []
 
 
 def check_openai_api_key():
+    """_summary_"""
     try:
         client = OpenAI(api_key=st.session_state.openai_api_key)
         try:
             client.models.list()
-        except openai.AuthenticationError as e:
+        except openai.AuthenticationError as error:
             with st.chat_message("assistant"):
-                st.error(str(e))
+                st.error(str(error))
             return False
-        else:
-            return True
-    except Exception as e:
+        return True
+    except Exception as error:
         with st.chat_message("assistant"):
-            st.error(str(e))
+            st.error(str(error))
         return False
 
 
 def main():
+    """_summary_"""
     st.set_page_config(
         page_title="Test", layout="centered", initial_sidebar_state="auto"
     )
@@ -40,7 +42,7 @@ def main():
 
     if "openai_api_key" not in st.session_state:
         st.session_state["openai_api_key"] = None
-        
+
     if "openai_maxtokens" not in st.session_state:
         st.session_state["openai_maxtokens"] = 50
 
@@ -88,11 +90,7 @@ def main():
             ("gpt-3.5-turbo", "gpt-4-turbo-preview"),
         )
         st.slider(
-            "Max Tokens",
-            min_value=20,
-            max_value=80,
-            step=10,
-            key="openai_maxtokens"
+            "Max Tokens", min_value=20, max_value=80, step=10, key="openai_maxtokens"
         )
         st.button(label="Reset Chat", on_click=reset_history)
 
