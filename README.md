@@ -1,10 +1,10 @@
 ---
-title: {{title}}
+title: This is a simple chat bot using openAI GPT models.
 emoji: {{emoji}}
-colorFrom: {{colorFrom}}
-colorTo: {{colorTo}}
-sdk: {{sdk}}
-sdk_version: {{sdkVersion}}
+colorFrom: red
+colorTo: green
+sdk: streamlit
+sdk_version: 1.31.1
 app_file: app.py
 pinned: false
 ---
