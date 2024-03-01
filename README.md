@@ -1,3 +1,14 @@
+---
+title: {{title}}
+emoji: {{emoji}}
+colorFrom: {{colorFrom}}
+colorTo: {{colorTo}}
+sdk: {{sdk}}
+sdk_version: {{sdkVersion}}
+app_file: app.py
+pinned: false
+---
+
 # simple-chat-bot
 This is a simple chat bot using openAI GPT models.
 
