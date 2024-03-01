@@ -1,6 +1,6 @@
-# import pytest
-# from app import return_true
+import pytest
+from app import return_true
 
 
-# def test_reset_history():
-#      assert return_true() == True
+def test_reset_history():
+     assert return_true() == True
