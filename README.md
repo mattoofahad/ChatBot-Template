@@ -1,6 +1,5 @@
 ---
 title: This is a simple chat bot using openAI GPT models.
-emoji: {{emoji}}
 colorFrom: red
 colorTo: green
 sdk: streamlit
