@@ -4,6 +4,8 @@ import openai
 import streamlit as st
 from openai import OpenAI
 
+def return_true():
+    return True
 
 def reset_history():
     """_summary_"""
