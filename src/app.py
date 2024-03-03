@@ -82,10 +82,9 @@ def main():
             reset_history()
 
     with st.sidebar:
-        st.text_input(
+        st.session_state["openai_api_key"] = st.text_input(
             label="OpenAI API key",
             value="***",
-            key="openai_api_key",
             help="This will not be saved or stored.",
             type="password",
         )
