@@ -1,8 +1,24 @@
 """Module doc string"""
 
+import os
+
 import openai
 import streamlit as st
+from discord_webhook import DiscordWebhook
+from dotenv import load_dotenv
 from openai import OpenAI
+
+load_dotenv()
+
+
+def discord_hook(message):
+    """_summary_"""
+    url = os.environ["DISCORD_HOOK"]
+    webhook = DiscordWebhook(url=url, username="simple-chat-bot", content=message)
+    webhook.execute()
+
+
+discord_hook("Simple chat bot initiated")
 
 
 def return_true():
