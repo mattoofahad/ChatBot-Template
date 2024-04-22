@@ -57,7 +57,7 @@ def main():
         layout="centered",
         initial_sidebar_state="auto",
     )
-    st.title("Simple Chat Bot")
+    st.title("👾👾 Simple Chat Bot 👾👾")
 
     if "messages" not in st.session_state:
         st.session_state.messages = []
