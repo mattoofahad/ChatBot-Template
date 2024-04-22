@@ -13,9 +13,10 @@ load_dotenv()
 
 def discord_hook(message):
     """_summary_"""
-    url = os.environ["DISCORD_HOOK"]
-    webhook = DiscordWebhook(url=url, username="simple-chat-bot", content=message)
-    webhook.execute()
+    url = os.environ.get("DISCORD_HOOK", "NO_HOOK")
+    if url != "NO_HOOK":
+        webhook = DiscordWebhook(url=url, username="simple-chat-bot", content=message)
+        webhook.execute()
 
 
 discord_hook("Simple chat bot initiated")
@@ -51,7 +52,10 @@ def check_openai_api_key():
 def main():
     """_summary_"""
     st.set_page_config(
-        page_title="Test", layout="centered", initial_sidebar_state="auto"
+        page_title="simple-chat-bot",
+        page_icon="👾",
+        layout="centered",
+        initial_sidebar_state="auto",
     )
     st.title("Simple Chat Bot")
 

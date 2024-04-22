@@ -12,29 +12,40 @@ pinned: false
 # simple-chat-bot
 This is a simple chat bot using openAI GPT models.
 
+## Docker 
+1. Create the docker container
+    ```bash
+    docker build -t streamlit .
+    ```
+
+2. run the container
+    ```bash
+    docker run -p 8501:8501 streamlit
+    ```
+3. The application is running on `http://localhost:8501/` URL.
+
 ## Create env
 
 1. Create conda env
-```
-conda create -n chat_bot_env python=3.10
-```
+    ```bash
+    conda create -n chat_bot_env python=3.10
+    ```
 
 2. Activate env
-
-```
-conda activate chat_bot_env
-```
+    ```bash
+    conda activate chat_bot_env
+    ```
 
 3. install packages
-```
-pip install -r requirements.txt
-```
+    ```bash
+    pip install -r requirements.txt
+    ```
 
 ## Run the application
-
-```
-streamlit run src\app.py
-```
+1. start the application
+    ```bash
+    streamlit run src\app.py
+    ```
 
 
 
