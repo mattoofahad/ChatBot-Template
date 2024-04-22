@@ -13,10 +13,13 @@ load_dotenv()
 
 def discord_hook(message):
     """_summary_"""
-    url = os.environ.get("DISCORD_HOOK", "NO_HOOK")
-    if url != "NO_HOOK":
-        webhook = DiscordWebhook(url=url, username="simple-chat-bot", content=message)
-        webhook.execute()
+    if os.environ.get("ENV", "NOT_LOCAL") != "LOCAL":
+        url = os.environ.get("DISCORD_HOOK", "NO_HOOK")
+        if url != "NO_HOOK":
+            webhook = DiscordWebhook(
+                url=url, username="simple-chat-bot", content=message
+            )
+            webhook.execute()
 
 
 discord_hook("Simple chat bot initiated")
@@ -29,7 +32,14 @@ def return_true():
 
 def reset_history():
     """_summary_"""
+    st.session_state.openai_api_key = st.session_state.api_key
     st.session_state.messages = []
+
+
+def start_app():
+    """_summary_"""
+    st.session_state.start_app = True
+    st.session_state.openai_api_key = st.session_state.api_key
 
 
 def check_openai_api_key():
@@ -47,6 +57,17 @@ def check_openai_api_key():
         with st.chat_message("assistant"):
             st.error(str(error))
         return False
+
+
+def openai_request_cost(prompt_token, completion_token, model_name):
+    """_summary_"""
+    if model_name == "gpt-3.5-turbo":
+        input_cost = 0.5 / 1e6
+        output_cost = 1.5 / 1e6
+    elif model_name == "gpt-4-turbo-preview":
+        input_cost = 1.5 / 1e6
+        output_cost = 2 / 1e6
+    return prompt_token * input_cost + completion_token * output_cost
 
 
 def main():
@@ -71,52 +92,66 @@ def main():
     if "openai_maxtokens" not in st.session_state:
         st.session_state["openai_maxtokens"] = 50
 
-    if st.session_state.openai_api_key is not None:
-        if check_openai_api_key():
-            client = OpenAI(api_key=st.session_state.openai_api_key)
+    if "start_app" not in st.session_state:
+        st.session_state["start_app"] = False
 
-            for message in st.session_state.messages:
-                with st.chat_message(message["role"]):
-                    st.markdown(message["content"])
+    if st.session_state.start_app:
+        print(st.session_state.openai_api_key)
+        if (
+            st.session_state.openai_api_key is not None
+            and st.session_state.openai_api_key != ""
+        ):
+            if check_openai_api_key():
+                client = OpenAI(api_key=st.session_state.openai_api_key)
 
-            if prompt := st.chat_input("Type your Query"):
-                with st.chat_message("user"):
-                    st.markdown(prompt)
-                st.session_state.messages.append({"role": "user", "content": prompt})
+                for message in st.session_state.messages:
+                    with st.chat_message(message["role"]):
+                        st.markdown(message["content"])
 
-                with st.chat_message("assistant"):
-                    stream = client.chat.completions.create(
-                        model=st.session_state["openai_model"],
-                        messages=[
-                            {"role": m["role"], "content": m["content"]}
-                            for m in st.session_state.messages
-                        ],
-                        max_tokens=st.session_state["openai_maxtokens"],
-                        stream=True,
+                if prompt := st.chat_input("Type your Query"):
+                    with st.chat_message("user"):
+                        st.markdown(prompt)
+                    st.session_state.messages.append(
+                        {"role": "user", "content": prompt}
                     )
-                    response = st.write_stream(stream)
-                st.session_state.messages.append(
-                    {"role": "assistant", "content": response}
-                )
+
+                    with st.chat_message("assistant"):
+                        stream = client.chat.completions.create(
+                            model=st.session_state["openai_model"],
+                            messages=[
+                                {"role": m["role"], "content": m["content"]}
+                                for m in st.session_state.messages
+                            ],
+                            max_tokens=st.session_state["openai_maxtokens"],
+                            stream=True,
+                        )
+                        response = st.write_stream(stream)
+                    st.session_state.messages.append(
+                        {"role": "assistant", "content": response}
+                    )
+            else:
+                reset_history()
         else:
-            reset_history()
+            with st.chat_message("assistant"):
+                st.markdown("**'OpenAI API key'** is missing.")
 
     with st.sidebar:
-        st.session_state["openai_api_key"] = st.text_input(
+        st.text_input(
             label="OpenAI API key",
-            value="***",
+            value="",
             help="This will not be saved or stored.",
             type="password",
+            key="api_key",
         )
 
         st.selectbox(
-            "Select the GPT model",
-            ("gpt-3.5-turbo", "gpt-4-turbo-preview"),
+            "Select the GPT model", ("gpt-3.5-turbo", "gpt-4-turbo"), key="openai_model"
         )
         st.slider(
             "Max Tokens", min_value=20, max_value=80, step=10, key="openai_maxtokens"
         )
-        st.button(label="Reset Chat", on_click=reset_history)
+        st.button("Start Chat", on_click=start_app, use_container_width=True)
+        st.button("Reset History", on_click=reset_history, use_container_width=True)
 
 
 if __name__ == "__main__":
