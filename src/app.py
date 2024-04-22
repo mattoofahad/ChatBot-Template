@@ -59,17 +59,6 @@ def check_openai_api_key():
         return False
 
 
-def openai_request_cost(prompt_token, completion_token, model_name):
-    """_summary_"""
-    if model_name == "gpt-3.5-turbo":
-        input_cost = 0.5 / 1e6
-        output_cost = 1.5 / 1e6
-    elif model_name == "gpt-4-turbo-preview":
-        input_cost = 1.5 / 1e6
-        output_cost = 2 / 1e6
-    return prompt_token * input_cost + completion_token * output_cost
-
-
 def main():
     """_summary_"""
     st.set_page_config(
