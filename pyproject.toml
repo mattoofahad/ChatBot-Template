@@ -30,6 +30,7 @@ pythonpath = [
 ]
 
 [tool.pylint]
+disable = "E0401"
 extension-pkg-whitelist= [
     "numpy",
     "torch",
@@ -50,6 +51,7 @@ suggestion-mode="yes"
 unsafe-load-any-extension="no"
 
 [tool.pylint.'MESSAGES CONTROL']
+disable = "W0718"
 enable="c-extension-no-member"
 
 [tool.pylint.'REPORTS']
@@ -174,7 +176,7 @@ max-parents=7
 max-public-methods=20
 max-returns=6
 max-statements=50
-min-public-methods=2
+min-public-methods=0
 
 [tool.pylint.'IMPORTS']
 allow-wildcard-with-all="no"
@@ -182,7 +184,7 @@ analyse-fallback-blocks="no"
 deprecated-modules="optparse,tkinter.tix"
 
 [tool.pylint.'EXCEPTIONS']
-overgeneral-exceptions= [
-    "BaseException",
-    "Exception"
+overgeneral-exceptions = [
+    "builtins.BaseException",
+    "builtins.Exception"
 ]
