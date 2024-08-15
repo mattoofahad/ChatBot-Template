@@ -3,11 +3,30 @@
 import openai
 import streamlit as st
 from openai import OpenAI
-from .logs import logger, log_execution_time
+
+from .logs import log_execution_time, logger
 
 
 class OpenAIFunctions:
     """Module doc string"""
+
+    @log_execution_time
+    @staticmethod
+    def invoke_model():
+        """_summary_"""
+        logger.debug("OpenAI invoked")
+        client = OpenAI(api_key=st.session_state.openai_api_key)
+        with st.chat_message("assistant"):
+            stream = client.chat.completions.create(
+                model=st.session_state["openai_model"],
+                messages=[
+                    {"role": m["role"], "content": m["content"]}
+                    for m in st.session_state.messages
+                ],
+                max_tokens=st.session_state["openai_maxtokens"],
+                stream=True,
+            )
+            return st.write_stream(stream)
 
     @log_execution_time
     @staticmethod
@@ -17,7 +36,7 @@ class OpenAIFunctions:
         try:
             client = OpenAI(api_key=st.session_state.openai_api_key)
             client.models.list()
-            logger.error("OpenAI key Working")
+            logger.debug("OpenAI key Working")
             return True
         except openai.AuthenticationError as auth_error:
             with st.chat_message("assistant"):

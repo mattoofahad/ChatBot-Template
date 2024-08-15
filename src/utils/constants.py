@@ -1,9 +1,11 @@
 """Module doc string"""
+
 from .config import OPENAI_API_KEY
 
 
 class ConstantVariables:
     """Module doc string"""
+
     model_list_tuple = (
         "gpt-4o",
         "gpt-4o-mini",

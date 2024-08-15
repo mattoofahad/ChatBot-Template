@@ -1,10 +1,10 @@
 """Module doc string"""
 
+import asyncio
 import logging
 import sys
 import time
 from functools import wraps
-import asyncio
 
 from colorama import Back, Fore, Style, init
 
@@ -80,7 +80,7 @@ def log_execution_time(func):
         end_time = time.time()
         execution_time = end_time - start_time
         message_string = f"{func.__name__} executed in {execution_time:.4f} seconds"
-        logger.info(message_string)
+        logger.debug(message_string)
         return result
 
     @wraps(func)
@@ -90,7 +90,7 @@ def log_execution_time(func):
         end_time = time.time()
         execution_time = end_time - start_time
         message_string = f"{func.__name__} executed in {execution_time:.4f} seconds"
-        logger.info(message_string)
+        logger.debug(message_string)
         return result
 
     if asyncio.iscoroutinefunction(func):

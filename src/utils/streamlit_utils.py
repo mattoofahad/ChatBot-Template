@@ -1,8 +1,10 @@
 """Module doc string"""
 
 import streamlit as st
-from .logs import logger
+
 from .constants import ConstantVariables
+from .logs import logger
+from .openai_utils import OpenAIFunctions
 
 
 class StreamlitFunctions:
@@ -18,6 +20,41 @@ class StreamlitFunctions:
             initial_sidebar_state="auto",
         )
         st.title("👾👾 Simple Chat Bot 👾👾")
+
+    @staticmethod
+    def streamlit_side_bar():
+        """_summary_"""
+        with st.sidebar:
+            st.text_input(
+                label="OpenAI API key",
+                value=ConstantVariables.api_key,
+                help="This will not be saved or stored.",
+                type="password",
+                key="api_key",
+            )
+
+            st.selectbox(
+                "Select the GPT model",
+                ConstantVariables.model_list_tuple,
+                key="openai_model",
+            )
+            st.slider(
+                "Max Tokens",
+                min_value=ConstantVariables.min_token,
+                max_value=ConstantVariables.max_tokens,
+                step=ConstantVariables.step,
+                key="openai_maxtokens",
+            )
+            st.button(
+                "Start Chat",
+                on_click=StreamlitFunctions.start_app,
+                use_container_width=True,
+            )
+            st.button(
+                "Reset History",
+                on_click=StreamlitFunctions.reset_history,
+                use_container_width=True,
+            )
 
     @staticmethod
     def streamlit_initialize_variables():
@@ -51,3 +88,20 @@ class StreamlitFunctions:
         logger.debug("Starting Application")
         st.session_state.start_app = True
         st.session_state.openai_api_key = st.session_state.api_key
+
+    @staticmethod
+    def streamlit_print_messages():
+        """_summary_"""
+        for message in st.session_state.messages:
+            with st.chat_message(message["role"]):
+                st.markdown(message["content"])
+
+    @staticmethod
+    def streamlit_invoke_model():
+        """_summary_"""
+        if prompt := st.chat_input("Type your Query"):
+            with st.chat_message("user"):
+                st.markdown(prompt)
+            st.session_state.messages.append({"role": "user", "content": prompt})
+            response = OpenAIFunctions.invoke_model()
+            st.session_state.messages.append({"role": "assistant", "content": response})
