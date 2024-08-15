@@ -33,7 +33,7 @@ if not logger.hasHandlers():
 
         def format(self, record):
             """Module doc string"""
-            
+
             levelno = record.levelno
             color = log_colors.get(levelno, "")
 
@@ -72,7 +72,7 @@ if not logger.hasHandlers():
 
 def log_execution_time(func):
     """Module doc string"""
-    
+
     @wraps(func)
     def sync_wrapper(*args, **kwargs):
         start_time = time.time()

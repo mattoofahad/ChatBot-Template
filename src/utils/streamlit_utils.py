@@ -10,6 +10,7 @@ class StreamlitFunctions:
 
     @staticmethod
     def streamlit_page_config():
+        """_summary_"""
         st.set_page_config(
             page_title="simple-chat-bot",
             page_icon="👾",
@@ -36,11 +37,6 @@ class StreamlitFunctions:
 
         if "start_app" not in st.session_state:
             st.session_state["start_app"] = False
-
-    @staticmethod
-    def return_true():
-        """_summary_"""
-        return True
 
     @staticmethod
     def reset_history():

@@ -14,6 +14,11 @@ from utils import (
 discord_hook("Simple chat bot initiated")
 
 
+def pytest_dummy_function():
+    """_summary_"""
+    return True
+
+
 def main():
     """_summary_"""
 

@@ -8,7 +8,7 @@ from .logs import logger, log_execution_time
 
 class OpenAIFunctions:
     """Module doc string"""
-    
+
     @log_execution_time
     @staticmethod
     def check_openai_api_key():

@@ -1,6 +1,9 @@
+"""Module doc string"""
 from .config import OPENAI_API_KEY
 
+
 class ConstantVariables:
+    """Module doc string"""
     model_list_tuple = (
         "gpt-4o",
         "gpt-4o-mini",
@@ -15,7 +18,7 @@ class ConstantVariables:
     step = 20
     default = round(((max_tokens + min_token) / 2) / step) * step
     default_token = max(min_token, min(max_tokens, default))
-    
+
     if OPENAI_API_KEY != "NO_KEY":
         api_key = OPENAI_API_KEY
     else:
