@@ -30,6 +30,7 @@ pythonpath = [
 ]
 
 [tool.pylint]
+disable = "E0401"
 extension-pkg-whitelist= [
     "numpy",
     "torch",
@@ -50,6 +51,7 @@ suggestion-mode="yes"
 unsafe-load-any-extension="no"
 
 [tool.pylint.'MESSAGES CONTROL']
+disable = "W0718"
 enable="c-extension-no-member"
 
 [tool.pylint.'REPORTS']
