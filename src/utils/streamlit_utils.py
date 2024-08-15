@@ -104,4 +104,5 @@ class StreamlitFunctions:
                 st.markdown(prompt)
             st.session_state.messages.append({"role": "user", "content": prompt})
             response = OpenAIFunctions.invoke_model()
-            st.session_state.messages.append({"role": "assistant", "content": response})
+            logger.debug(response)
+            st.session_state.messages.append({"role": "assistant", "content": response[0]})

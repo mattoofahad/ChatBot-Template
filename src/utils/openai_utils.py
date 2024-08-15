@@ -25,8 +25,23 @@ class OpenAIFunctions:
                 ],
                 max_tokens=st.session_state["openai_maxtokens"],
                 stream=True,
+                stream_options={"include_usage": True},
             )
-            return st.write_stream(stream)
+
+            def stream_data():
+                for chunk in stream:
+                    if chunk.choices != []:
+                        word = chunk.choices[0].delta.content
+                        if word is not None:
+                            yield word
+                    if chunk.usage is not None:
+                        yield {
+                            "completion_tokens": chunk.usage.completion_tokens,
+                            "prompt_tokens": chunk.usage.prompt_tokens,
+                            "total_tokens": chunk.usage.total_tokens,
+                        }
+
+            return st.write_stream(stream_data)
 
     @log_execution_time
     @staticmethod
