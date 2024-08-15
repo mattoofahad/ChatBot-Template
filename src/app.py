@@ -3,7 +3,7 @@
 from datetime import datetime
 
 import streamlit as st
-from utils import (
+from .utils import (
     OpenAIFunctions,
     StreamlitFunctions,
     discord_hook,
