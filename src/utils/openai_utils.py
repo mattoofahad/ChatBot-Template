@@ -19,14 +19,19 @@ class OpenAIFunctions:
             try:
                 client.models.list()
                 logger.error("OpenAI key Working")
-            except openai.AuthenticationError as error:
+                return True
+            except openai.AuthenticationError as auth_error:
                 with st.chat_message("assistant"):
-                    st.error(str(error))
-                logger.error(str(error))
+                    st.error(str(auth_error))
+                logger.error("AuthenticationError: %s", auth_error)
                 return False
-            return True
-        except Exception as error:
+            except openai.OpenAIError as openai_error:
+                with st.chat_message("assistant"):
+                    st.error(str(openai_error))
+                logger.error("OpenAIError: %s", openai_error)
+                return False
+        except Exception as general_error:
             with st.chat_message("assistant"):
-                st.error(str(error))
-            logger.error(str(error))
+                st.error(str(general_error))
+            logger.error("Unexpected error: %s", general_error)
             return False
