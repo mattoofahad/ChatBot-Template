@@ -182,7 +182,7 @@ analyse-fallback-blocks="no"
 deprecated-modules="optparse,tkinter.tix"
 
 [tool.pylint.'EXCEPTIONS']
-overgeneral-exceptions= [
-    "BaseException",
-    "Exception"
+overgeneral-exceptions = [
+    "builtins.BaseException",
+    "builtins.Exception"
 ]
