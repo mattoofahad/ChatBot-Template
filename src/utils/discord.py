@@ -1,9 +1,10 @@
-import os
+"""Module doc string"""
 
 from discord_webhook import DiscordWebhook
 
 from .config import ENVIRONMENT, DISCORD_HOOK
 from .logs import logger
+
 
 def discord_hook(message):
     """_summary_"""

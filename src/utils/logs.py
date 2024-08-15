@@ -1,3 +1,5 @@
+"""Module doc string"""
+
 import logging
 import sys
 import time
@@ -27,7 +29,11 @@ if not logger.hasHandlers():
     }
 
     class ColoredFormatter(logging.Formatter):
+        """Module doc string"""
+
         def format(self, record):
+            """Module doc string"""
+            
             levelno = record.levelno
             color = log_colors.get(levelno, "")
 
@@ -62,9 +68,11 @@ if not logger.hasHandlers():
 
     logger.addHandler(normal_handler)
     logger.addHandler(error_handler)
-    
+
 
 def log_execution_time(func):
+    """Module doc string"""
+    
     @wraps(func)
     def sync_wrapper(*args, **kwargs):
         start_time = time.time()
