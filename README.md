@@ -28,7 +28,7 @@ This is a simple chat bot using openAI GPT models.
 
 1. Create conda env
     ```bash
-    conda create -n chat_bot_env python=3.10
+    conda create -n chat_bot_env python=3.10 -y
     ```
 
 2. Activate env
