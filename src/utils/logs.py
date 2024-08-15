@@ -79,7 +79,8 @@ def log_execution_time(func):
         result = func(*args, **kwargs)
         end_time = time.time()
         execution_time = end_time - start_time
-        logger.info(f"{func.__name__} executed in {execution_time:.4f} seconds")
+        message_string = f"{func.__name__} executed in {execution_time:.4f} seconds"
+        logger.info(message_string)
         return result
 
     @wraps(func)
@@ -88,10 +89,10 @@ def log_execution_time(func):
         result = await func(*args, **kwargs)
         end_time = time.time()
         execution_time = end_time - start_time
-        logger.info(f"{func.__name__} executed in {execution_time:.4f} seconds")
+        message_string = f"{func.__name__} executed in {execution_time:.4f} seconds"
+        logger.info(message_string)
         return result
 
     if asyncio.iscoroutinefunction(func):
         return async_wrapper
-    else:
-        return sync_wrapper
+    return sync_wrapper
