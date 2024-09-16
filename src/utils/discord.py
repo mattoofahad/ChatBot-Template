@@ -19,5 +19,6 @@ def discord_hook(message):
             logger.debug("Discord Hook Successful.")
         else:
             logger.debug("Discord Hook Failed.")
-    except Exception as e:
-        logger.error(f"Discord Hook Failed. Error {e}")
+    except Exception as error:
+        error_message = f"Discord Hook Failed. Error {error}"
+        logger.error(error_message)
