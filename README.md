@@ -44,7 +44,7 @@ This is a simple chat bot using openAI GPT models.
 ## Run the application
 1. start the application
     ```bash
-    streamlit run src\app.py
+    streamlit run app.py
     ```
 
 

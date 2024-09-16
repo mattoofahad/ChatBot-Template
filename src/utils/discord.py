@@ -2,14 +2,14 @@
 
 from discord_webhook import DiscordWebhook
 
-from .config import DISCORD_HOOK, ENVIRONMENT
+from .config import DISCORD_HOOK
 from .logs import logger
 
 
 def discord_hook(message):
     """_summary_"""
-    logger.info(message)
-    if ENVIRONMENT != "LOCAL":
+    try:
+        logger.info(message)
         url = DISCORD_HOOK
         if url != "NO_HOOK":
             webhook = DiscordWebhook(
@@ -19,3 +19,5 @@ def discord_hook(message):
             logger.debug("Discord Hook Successful.")
         else:
             logger.debug("Discord Hook Failed.")
+    except Exception as e:
+        logger.error(f"Discord Hook Failed. Error {e}")
