@@ -47,6 +47,11 @@ This is a simple chat bot using openAI GPT models.
     streamlit run app.py
     ```
 
+## Pylint
+```bash
+pylint src
+```
+
 
 
 
