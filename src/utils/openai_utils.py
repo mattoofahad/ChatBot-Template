@@ -2,6 +2,7 @@
 
 import openai
 import streamlit as st
+from litellm import completion
 from openai import OpenAI
 
 from .logs import log_execution_time, logger
@@ -15,14 +16,16 @@ class OpenAIFunctions:
     def invoke_model():
         """_summary_"""
         logger.debug("OpenAI invoked")
-        client = OpenAI(api_key=st.session_state.openai_api_key)
         with st.chat_message("assistant"):
-            stream = client.chat.completions.create(
+            messages = [
+                {"role": m["role"], "content": m["content"]}
+                for m in st.session_state.messages
+            ]
+
+            stream = completion(
+                api_key=st.session_state.openai_api_key,
                 model=st.session_state["openai_model"],
-                messages=[
-                    {"role": m["role"], "content": m["content"]}
-                    for m in st.session_state.messages
-                ],
+                messages=messages,
                 max_tokens=st.session_state["openai_maxtokens"],
                 stream=True,
                 stream_options={"include_usage": True},
@@ -34,7 +37,7 @@ class OpenAIFunctions:
                         word = chunk.choices[0].delta.content
                         if word is not None:
                             yield word
-                    if chunk.usage is not None:
+                    if hasattr(chunk, "usage"):
                         yield {
                             "completion_tokens": chunk.usage.completion_tokens,
                             "prompt_tokens": chunk.usage.prompt_tokens,
