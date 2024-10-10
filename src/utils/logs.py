@@ -50,11 +50,15 @@ if not logger.hasHandlers():
             }
 
             # Combine details and colored message
-            return f"{Fore.WHITE}{details} :: {color}{message}{Style.RESET_ALL}"
+            return (
+                f"{Fore.WHITE}{details} :: {color}{message}{Style.RESET_ALL}"
+            )
 
     normal_handler = logging.StreamHandler(sys.stdout)
     normal_handler.setLevel(logging.DEBUG)
-    normal_handler.addFilter(lambda logRecord: logRecord.levelno < logging.WARNING)
+    normal_handler.addFilter(
+        lambda logRecord: logRecord.levelno < logging.WARNING
+    )
 
     error_handler = logging.StreamHandler(sys.stderr)
     error_handler.setLevel(logging.WARNING)
@@ -79,7 +83,9 @@ def log_execution_time(func):
         result = func(*args, **kwargs)
         end_time = time.time()
         execution_time = end_time - start_time
-        message_string = f"{func.__name__} executed in {execution_time:.4f} seconds"
+        message_string = (
+            f"{func.__name__} executed in {execution_time:.4f} seconds"
+        )
         logger.debug(message_string)
         return result
 
@@ -89,7 +95,9 @@ def log_execution_time(func):
         result = await func(*args, **kwargs)
         end_time = time.time()
         execution_time = end_time - start_time
-        message_string = f"{func.__name__} executed in {execution_time:.4f} seconds"
+        message_string = (
+            f"{func.__name__} executed in {execution_time:.4f} seconds"
+        )
         logger.debug(message_string)
         return result
 

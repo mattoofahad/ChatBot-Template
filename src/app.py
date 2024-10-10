@@ -24,7 +24,7 @@ def main():
         if (
             st.session_state.openai_api_key is not None
             and st.session_state.openai_api_key != ""
-        ):
+        ) or st.session_state.provider_select != "OpenAI":
             logger.info("OpenAI key Checking condition passed")
             if OpenAIFunctions.check_openai_api_key():
                 logger.info("Inference Started")

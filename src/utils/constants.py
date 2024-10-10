@@ -12,13 +12,14 @@ class ConstantVariables:
         "gpt-4-turbo",
         "gpt-3.5-turbo",
         "o1-preview",
-        "o1-mini"
+        "o1-mini",
     )
+    provider = ("lm-studio", "OpenAI")
     default_model = "gpt-4o-mini"
-
-    max_tokens = 180
-    min_token = 20
-    step = 20
+    default_provider = "lm-studio"
+    max_tokens = 1024
+    min_token = 32
+    step = 32
     default = round(((max_tokens + min_token) / 2) / step) * step
     default_token = max(min_token, min(max_tokens, default))
 
