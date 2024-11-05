@@ -9,8 +9,8 @@ app_file: app.py
 pinned: false
 ---
 
-# simple-chat-bot
-This is a simple chat bot using openAI GPT models.
+# ChatBot-Template
+This is a chat bot template that utilized litellm to invoke openAI GPT or local lmstudio based hosted models.
 
 ## Docker 
 1. Create the docker container
